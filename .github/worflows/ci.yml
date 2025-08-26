@@ -1,16 +1,63 @@
-name: ci
+# .github/workflows/deploy.yml
+name: Deploy mdBook to GitHub Pages  # 工作流名称（可自定义）
+
+# 触发条件：当代码推送到 main 分支时自动运行（官方推荐主分支触发）
 on:
   push:
-    branches:
-      - master
-      - main
+    branches: [ "main" ]  # 若你的主分支是 master，改为 master
+  # 可选：允许手动触发（在 GitHub Actions 页面点击 "Run workflow"）
+  workflow_dispatch:
+
 jobs:
   deploy:
+    # 运行环境：官方推荐 Ubuntu 最新版（兼容性最好）
     runs-on: ubuntu-latest
+
+    # 权限设置：必须开启 "contents: write"，否则无法推送静态文件到 gh-pages 分支
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      # 步骤 1：拉取 GitHub 仓库的源代码到工作流环境（官方基础步骤）
+      - name: Checkout source code
+        uses: actions/checkout@v4  # 官方推荐的最新版 Checkout 插件
         with:
-          python-version: 3.x
-      - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+          fetch-depth: 0  # 拉取完整 Git 历史，避免构建时缺失提交信息
+
+      # 步骤 2：安装 Rust 环境（mdBook 依赖 Rust，官方核心步骤）
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable  # 官方推荐的 Rust 安装插件（稳定版）
+        with:
+          toolchain: stable  # 使用稳定版 Rust（避免 nightly 版本兼容性问题）
+
+      # 步骤 3：缓存 Rust 依赖（官方推荐，加速后续构建，减少重复下载）
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2  # 官方推荐的 Rust 缓存插件
+
+      # 步骤 4：安装 mdBook（工作流环境是全新的，需重新安装，官方步骤）
+      - name: Install mdBook
+        run: cargo install mdbook  # 与本地安装命令一致，官方标准方式
+
+      # 步骤 5：安装 mdBook 插件（可选，若你的 book.toml 配置了插件，如官方的 mdbook-toc）
+      # 示例：若需自动生成目录，先在 book.toml 配置插件，再在此处安装
+      # - name: Install mdBook plugins
+      #   run: |
+      #     cargo install mdbook-toc
+      #     cargo install mdbook-mermaid
+
+      # 步骤 6：构建静态文件（官方核心命令，输出到 book/ 目录）
+      - name: Build mdBook
+        run: mdbook build  # 官方标准构建命令，生成 HTML/CSS/JS 等静态文件
+
+      # 步骤 7：部署到 GitHub Pages（官方推荐用 peaceiris/actions-gh-pages 插件）
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4  # 官方推荐的部署插件（最新版）
+        with:
+          # GitHub 自动生成的令牌，用于推送静态文件到 gh-pages 分支（无需手动配置）
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 要部署的静态文件目录（即 mdbook build 生成的目录，官方默认是 book/）
+          publish_dir: ./book
+          # 部署到的分支（GitHub Pages 唯一支持的源分支，官方强制要求用 gh-pages）
+          publish_branch: gh-pages
+          # 清空 gh-pages 分支旧内容（官方推荐，避免冗余文件堆积）
+          force_orphan: true
