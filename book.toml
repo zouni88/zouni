@@ -2,3 +2,16 @@
 title = "zouni"
 authors = ["zouni88"]
 language = "en"
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["md"]
+depth = 2  # 只包含 h1-h2 标题
+ordered = true  # 生成有序列表（默认无序列表）
+skip_first = true  # 跳过第一个标题（通常是全书标题）
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]

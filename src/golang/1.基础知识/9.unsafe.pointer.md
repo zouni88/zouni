@@ -1,0 +1,19 @@
+### unsafe.pointer
+1. 可支持操作内存；
+2. 可以转换到任意类型指针
+3. 非安全的，不建议使用
+4. unsafe.Pointer() 任意转换指针类型，并可进行指针运算
+5. 其他类型的指针只能转化为unsafe.Pointer，也只有unsafe.Pointer才能转化成任意类型的指针
+6. 只有uintptr才支持加减操作，而uintptr是一个非负整数，表示地址值，没有类型信息，以字节为单位
+
+实际操作：获取一个字符串第二个字符的地址和值
+```golang
+    var s = "abc"
+	var strHeader = (*reflect.StringHeader)(unsafe.Pointer(&s))
+	var res = (*byte)(unsafe.Pointer(strHeader.Data)) //获取字符串第一个字符的地址
+	log.Printf("strHeader.Data = %c", *res)
+	var ress = (*byte)(unsafe.Pointer(strHeader.Data + uintptr(1))) //获取字符串第一个字符的地址
+	log.Printf("strHeader.Data = %c", *ress)
+	//var ssss uintptr = 0xc000088fc0
+	//log.Println(*(*byte)(unsafe.Pointer(ssss)))
+```

@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>编译 - zouni</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">zouni</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="linux-编译-ffmpeg"><a class="header" href="#linux-编译-ffmpeg">linux 编译 ffmpeg</a></h2>
+<ol>
+<li>
+<p>下载源码<br />
+<a href="https://github.com/FFmpeg/FFmpeg">下载ffmpeg源码</a> 或者通过git clone源码：</p>
+<pre><code>git clone git@github.com:FFmpeg/FFmpeg.git
+</code></pre>
+</li>
+<li>
+<p>进入源码根目录，执行<code>./configure</code> 出现如下错误：</p>
+<pre><code>nasm/yasm not found
+</code></pre>
+<p>需要下载yasm汇编器</p>
+</li>
+<li>
+<p>下载yasm汇编器</p>
+<pre><code>wget https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
+</code></pre>
+<p>解压安装  :</p>
+<pre><code class="language-shell">tar -zxvf yasm-1.3.0.tar.gz
+</code></pre>
+<p>进入解压后目录</p>
+<pre><code>cd yasm-1.3.0
+
+./configure
+# 接着 
+make 
+sudo make install
+</code></pre>
+<p>接着返回 ffmpeg目录，执行命令</p>
+<pre><code>small@small:~/FFmpeg$
+./configure --prefix="/usr/local/ffmpeg/" --enable-libx264 --enable-gpl --enable-nonfree --enable-libfdk-aac
+</code></pre>
+<p>出现如下显示就代表成功了：</p>
+<pre><code class="language-shell">small@small:~/FFmpeg$ ./configure
+install prefix            /usr/local
+source path               .
+C compiler                gcc
+C library                 glibc
+ARCH                      x86 (generic)
+big-endian                no
+runtime cpu detection     yes
+standalone assembly       yes
+x86 assembler             yasm
+MMX enabled               yes
+MMXEXT enabled            yes
+3DNow! enabled            yes
+3DNow! extended enabled   yes
+SSE enabled               yes
+SSSE3 enabled             yes
+AESNI enabled             yes
+AVX enabled               yes
+AVX2 enabled              yes
+AVX-512 enabled           yes
+XOP enabled               yes
+...
+</code></pre>
+</li>
+</ol>
+<h2 id="启用第三方模块支持libfdk_aac和libx264需要单独下载编译"><a class="header" href="#启用第三方模块支持libfdk_aac和libx264需要单独下载编译">启用第三方模块支持：libfdk_aac和libx264，需要单独下载编译</a></h2>
+<p>出现如下错误</p>
+<h3 id="1-error-libfdk_aac-not-found"><a class="header" href="#1-error-libfdk_aac-not-found">1. ERROR: libfdk_aac not found</a></h3>
+<pre><code class="language-shell">small@small:~/FFmpeg$ ./configure --enable-libx264 --enable-libfdk-aac --enable-gpl --enable-nonfree
+ERROR: libfdk_aac not found
+
+If you think configure made a mistake, make sure you are using the latest
+version from Git.  If the latest version fails, report the problem to the
+ffmpeg-user@ffmpeg.org mailing list or IRC #ffmpeg on irc.freenode.net.
+Include the log file "ffbuild/config.log" produced by configure as this will help
+solve the problem.
+</code></pre>
+<p><a href="https://sourceforge.net/projects/opencore-amr/files/fdk-aac/">下载libfdk_aac库</a>：
+https://sourceforge.net/projects/opencore-amr/files/fdk-aac/</p>
+<pre><code class="language-shell">./configure  # 配置
+make  # 编译
+make install # 编译安装
+</code></pre>
+<h3 id="2-error-libx264-not-found"><a class="header" href="#2-error-libx264-not-found">2. ERROR: libx264 not found</a></h3>
+<pre><code class="language-shell">small@small:~/FFmpeg$ ./configure --enable-libx264 --enable-libfdk-aac --
+ERROR: libx264 not found
+
+If you think configure made a mistake, make sure you are using the latest
+version from Git.  If the latest version fails, report the problem to the
+ffmpeg-user@ffmpeg.org mailing list or IRC #ffmpeg on irc.freenode.net.
+Include the log file "ffbuild/config.log" produced by configure as this will help
+solve the problem.
+
+</code></pre>
+<p><a href="https://www.videolan.org/developers/x264.html">下载libx264</a> ：https://www.videolan.org/developers/x264.html</p>
+<p>代码库：git clone https://code.videolan.org/videolan/x264.git<br />
+下载完继续：</p>
+<pre><code class="language-shell">./configure  --enable-shared
+make  
+make install
+</code></pre>
+<h3 id="3-还没完又出现新的错误了"><a class="header" href="#3-还没完又出现新的错误了">3. 还没完，又出现新的错误了：</a></h3>
+<pre><code class="language-shell">small@small:~/x264$ ./configure
+Found no assembler
+Minimum version is nasm-2.13
+If you really want to compile without asm, configure with --disable-asm.
+</code></pre>
+<p><a href="https://www.nasm.us/pub/nasm/releasebuilds/2.15/">下载nasm目前最新版</a> :https://www.nasm.us/pub/nasm/releasebuilds/2.15/
+继续编译安装：</p>
+<pre><code class="language-shell">./configure  
+make  
+make install
+</code></pre>
+<h3 id="4-回到上一步继续编译x264"><a class="header" href="#4-回到上一步继续编译x264">4. 回到上一步，继续编译x264:</a></h3>
+<pre><code class="language-shell">./configure  --enable-shared # --enable-shared 这里很重要
+make  
+make install
+</code></pre>
+<h3 id="5-最终回到ffmpeg继续编译"><a class="header" href="#5-最终回到ffmpeg继续编译">5. 最终回到ffmpeg继续编译:</a></h3>
+<pre><code class="language-shell">small@small:~/FFmpeg$ ./configure --enable-libx264 --enable-libfdk-aac --
+small@small:~/FFmpeg$ make
+small@small:~/FFmpeg$ make install
+</code></pre>
+<h3 id="6-make-nothing-to-be-done-for-all"><a class="header" href="#6-make-nothing-to-be-done-for-all">6. make: Nothing to be done for 'all'.</a></h3>
+<p>有时候需要重新编译，会遇到这个错误，需要 clean</p>
+<pre><code class="language-shell">make clean
+</code></pre>
+<h3 id="7-最后还有个问题就是找不到so-库的问题"><a class="header" href="#7-最后还有个问题就是找不到so-库的问题">7. 最后还有个问题就是找不到<code>.so</code> 库的问题</a></h3>
+<pre><code class="language-shell">small@small:/usr/lib$ ffmpeg
+ffmpeg: error while loading shared libraries: libx264.so.161: cannot open shared object file: No such file or directory
+</code></pre>
+<p>这个问题一看就是没找到动态库，libx264默认安装路径是 <code>/usr/local/lib</code> 目录，解决这个问题的方法就是建个软连接或者直接把库移动到 <code>/usr/lib</code> 目录:</p>
+<pre><code class="language-shell">small@small:/usr/local/lib$ sudo ln -s /usr/local/lib/libx264.so.161 /usr/lib/libx264.so.161
+</code></pre>
+<p>大功告成，没有报错；</p>
+<h3 id="8-接下来试试看是否正常"><a class="header" href="#8-接下来试试看是否正常">8. 接下来试试看是否正常：</a></h3>
+<pre><code class="language-shell">small@small:~$ ffmpeg -i YOLOv3.mp4 YO.flv
+ffmpeg version 4.3.git Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 9 (Ubuntu 9.3.0-17ubuntu1~20.04)
+  configuration: --enable-libx264 --enable-libfdk-aac --enable-gpl --enable-nonfree
+  libavutil      56. 66.100 / 56. 66.100
+  libavcodec     58.125.101 / 58.125.101
+  libavformat    58. 68.100 / 58. 68.100
+  libavdevice    58. 12.100 / 58. 12.100
+  libavfilter     7.107.100 /  7.107.100
+  libswscale      5.  8.100 /  5.  8.100
+  libswresample   3.  8.100 /  3.  8.100
+  libpostproc    55.  8.100 / 55.  8.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'YOLOv3.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 0
+    compatible_brands: isommp42
+    creation_time   : 2018-10-29T06:43:27.000000Z
+  Duration: 00:03:45.70, start: 0.000000, bitrate: 2072 kb/s
+  Stream #0:0(und): Video: h264 (Main) (avc1 / 0x31637661), yuv420p(tv, bt709), 1280x720 [SAR 1:1 DAR 16:9], 1942 kb/s, 29.97 fps, 29.97 tbr, 90k tbn, 59.94 tbc (default)
+  ...
+</code></pre>
+<h3 id="9-看一下转换结果没有问题"><a class="header" href="#9-看一下转换结果没有问题">9. 看一下转换结果，没有问题~</a></h3>
+<pre><code class="language-shell">small@small:~$ ls
+FFmpeg      fdk-aac-2.0.1         log.txt              nasm-2.15.tar.gz  x264
+YO.flv      fdk-aac-2.0.1.tar.gz  nasm-2.13.03.tar.gz  python            
+YOLOv3.mp4  go                    nasm-2.15            test.go           yasm-1.3.0.tar.gz
+</code></pre>
+<p>收工</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../ffmpeg/推流.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../atom/_index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../ffmpeg/推流.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../atom/_index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

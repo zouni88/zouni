@@ -28,6 +28,9 @@ jobs:
       # 步骤 4：安装 mdBook（工作流环境是全新的，需重新安装，官方步骤）
       - name: Install mdBook
         run: cargo install mdbook  # 与本地安装命令一致，官方标准方式
+      # 安装 mdbook-mermaid 插件
+      - name: Install mdbook-mermaid
+        run: cargo install mdbook-mermaid
 
       - name: Build mdBook
         run: mdbook build  # 官方标准构建命令，生成 HTML/CSS/JS 等静态文件
