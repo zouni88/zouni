@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>alpine-坑 - zouni</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">zouni</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h3 id="安装uwsgi--报各种-致命错误"><a class="header" href="#安装uwsgi--报各种-致命错误">安装uwsgi  报各种 致命错误</a></h3>
+<ol>
+<li>缺少c编译器</li>
+</ol>
+<pre><code class="language-Shell">File "uwsgiconfig.py", line 742, in __init__
+    raise Exception("you need a C compiler to build uWSGI")
+Exception: you need a C compiler to build uWSGI
+</code></pre>
+<p>首次安装软件，需要先更新源。</p>
+<pre><code class="language-Shell">apk update
+apk add gcc
+</code></pre>
+<ol start="2">
+<li>执行<code>pip3 install uWSGI</code></li>
+</ol>
+<pre><code class="language-python">In file included from core/socket.c:1:0:
+./uwsgi.h:165:19: fatal error: stdio.h: No such file or directory
+compilation terminated.
+In file included from core/logging.c:2:0:
+./uwsgi.h:165:19: fatal error: stdio.h: No such file or directory
+compilation terminated.
+In file included from core/utils.c:1:0:
+./uwsgi.h:165:19: fatal error: stdio.h: No such file or directory
+compilation terminated.
+In file included from core/protocol.c:1:0:
+./uwsgi.h:165:19: fatal error: stdio.h: No such file or directory
+compilation terminated.
+</code></pre>
+<p>缺乏C语言的标准库</p>
+<pre><code class="language-Shell">apk add libc-dev
+</code></pre>
+<ol start="3">
+<li>继续安装 <code>pip3 install uwsgi</code></li>
+</ol>
+<pre><code class="language-python">In file included from core/logging.c:2:0:
+    ./uwsgi.h:238:26: fatal error: linux/limits.h: No such file or directory
+    compilation terminated.
+    In file included from core/utils.c:1:0:
+    ./uwsgi.h:238:26: fatal error: linux/limits.h: No such file or directory
+    compilation terminated.
+    In file included from core/protocol.c:1:0:
+    ./uwsgi.h:238:26: fatal error: linux/limits.h: No such file or directory
+    compilation terminated.
+    In file included from core/socket.c:1:0:
+    ./uwsgi.h:238:26: fatal error: linux/limits.h: No such file or directory
+    compilation terminated.
+</code></pre>
+<p>缺乏Linux相关的头文件</p>
+<pre><code class="language-Shell">apk add linux-headers
+</code></pre>
+<ol start="4">
+<li>由于uWSGI功能众多，所以，使用的参数不同，需要的功能也会有差异。
+在使用--static-map等参数时，可能会有额外的编译依赖，否则会有运行时报错。</li>
+</ol>
+<pre><code>!!! no internal routing support, rebuild with pcre support !!!
+</code></pre>
+<p>PCRE（Perl Compatible Regular Expressions）是一个Perl库，包括 perl 兼容的正则表达式库。
+编译依赖为pcre-dev，运行依赖为pcre。</p>
+<ol start="5">
+<li>运行时，某些功能需要访问/etc/mime.types文件。</li>
+</ol>
+<pre><code>!!! no /etc/mime.types file found !!!
+</code></pre>
+<p>MIME（Multipurpose Internet Mail Extensions）多用途互联网邮件扩展类型。 是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p>
+<p>这个东西对应的Alpine库是mailcap。</p>
+<blockquote>
+<p>最终通过以下命令安装成功</p>
+</blockquote>
+<pre><code class="language-Shell">RUN apk update &amp;&amp; apk add \
+        libuuid \
+        pcre \
+        mailcap \
+        gcc \
+        libc-dev \
+        linux-headers \
+        pcre-dev \
+    &amp;&amp; pip install --no-cache-dir uWSGI&gt;=2.0.15 \
+    &amp;&amp; apk del \
+        gcc \
+        libc-dev \
+        linux-headers \
+    &amp;&amp; rm -rf /tmp/*
+</code></pre>
+<h3 id="虽然成功了但是由于有部分python库无法在alpine上使用比如opencv-python-原因是alpine的libc不是gnu的而是musl-libc-详见cannot-install-opencv-contrib-python-from-alpine-linux--issue-75--skvarkopencv-python"><a class="header" href="#虽然成功了但是由于有部分python库无法在alpine上使用比如opencv-python-原因是alpine的libc不是gnu的而是musl-libc-详见cannot-install-opencv-contrib-python-from-alpine-linux--issue-75--skvarkopencv-python">虽然成功了，但是由于有部分Python库，无法在Alpine上使用，比如opencv-python。 原因是，Alpine的libc不是GNU的，而是musl libc。 详见：Cannot install opencv-contrib-python from Alpine Linux · Issue #75 · skvark/opencv-python。</a></h3>
+<blockquote>
+<p>I completely forgot that Alpine Linux is based on musl libc and not on GNU libc and thus it's not a GNU/Linux distribution. Manylinux supports only GNU/Linux.</p>
+</blockquote>
+<h1 id="所以放弃使用alpine"><a class="header" href="#所以放弃使用alpine">所以放弃使用<code>alpine</code></a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../container/docker/DockerFile/_index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../container/docker/DockerFile/alpine镜像.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../container/docker/DockerFile/_index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../container/docker/DockerFile/alpine镜像.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

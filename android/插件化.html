@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>插件化 - zouni</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">zouni</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>Classloader 分为三种：
+1: pathClassloader: Android 用来加载系统文件 和 应用的主文件
+2: DexClassloader: Android 用来加载 jar/apk/dex 文件
+3: URLClassloader: 可以加载java的jar包,但是Dalvik 虚拟机不支持这种加载方式</p>
+<pre><code class="language-java">public class ProxyActivity extends AppCompatActivity {
+
+    private ProxyActivityInterface pluginObj;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //在这里拿到了真实跳转的activity 拿出来 再去启动真实的activity
+
+        String className = getIntent().getStringExtra("ClassName");
+
+        //通过反射在去启动一个真实的activity 拿到Class对象
+        try {
+            Class&lt;?&gt; plugClass = getClassLoader().loadClass(className);
+            Constructor&lt;?&gt; pluginConstructor = plugClass.getConstructor(new Class[]{});
+            //因为插件的activity实现了我们的标准
+            pluginObj = (ProxyActivityInterface) pluginConstructor.newInstance(new Object[]{});
+            pluginObj.attach(this);//注入上下文
+            pluginObj.onCreate(new Bundle());//一定要调用onCreate 
+        } catch (Exception e) {
+            if (e.getClass().getSimpleName() .equals("ClassCastException")){
+                //我这里是直接拿到异常判断的 ，也可的 拿到上面的plugClass对象判断有没有实现我们的接口
+                finish();
+                Toast.makeText(this,"非法页面",Toast.LENGTH_LONG).show();
+                return;
+            }
+            e.printStackTrace();
+        }
+    }
+]
+    //为什么要重写这个呢 因为这个是插件内部startactivity调用的 将真正要开启的activity的类名穿过来
+    //然后取出来，启动我们的占坑的activity 在我们真正要启动的赛进去
+    @Override
+    public void startActivity(Intent intent) {
+        String className1=intent.getStringExtra("ClassName");
+        Intent intent1 = new Intent(this, ProxyActivity.class);
+        intent1.putExtra("ClassName", className1);
+        super.startActivity(intent1);
+    }
+
+    //重写classLoader
+    @Override
+    public ClassLoader getClassLoader() {
+        return HookManager.getInstance().getClassLoader();
+    }
+
+    //重写Resource
+    @Override
+    public Resources getResources() {
+        return HookManager.getInstance().getResource();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        pluginObj.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        pluginObj.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pluginObj.onPause();
+    }
+}
+</code></pre>
+<pre><code class="language-java">public class HookManager {
+    private static final HookManager ourInstance = new HookManager();
+    private Resources resources;
+    private DexClassLoader loader;
+    public PackageInfo packageInfo;
+
+    public static HookManager getInstance() {
+        return ourInstance;
+    }
+
+    private HookManager() {
+    }
+
+
+    //用来加载插件
+    public void loadPlugin(Activity activity) {
+        // 假如这里是从网络获取的插件 我们直接从sd卡获取 然后读取到我们的cache目录
+        String pluginName = "plugin.apk";
+        File filesDir = activity.getDir("plugin", activity.MODE_PRIVATE);
+        String filePath = new File(filesDir, pluginName).getAbsolutePath();
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+        FileInputStream is = null;
+        FileOutputStream os = null;
+        //读取的目录
+        try {
+            is = new FileInputStream(new File(Environment.getExternalStorageDirectory(), pluginName));
+            //要输入的目录
+            os = new FileOutputStream(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            int len = 0;
+            byte[] buffer = new byte[1024];
+            while ((len = is.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+            File f = new File(filePath);
+            if (f.exists()) {
+                Toast.makeText(activity, "dex overwrite", Toast.LENGTH_SHORT).show();
+            }
+            loadPathToPlugin(activity);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                os.close();
+                is.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    private void loadPathToPlugin(Activity activity) {
+        File filesDir = activity.getDir("plugin", activity.MODE_PRIVATE);
+        String name = "plugin.apk";
+        String path = new File(filesDir, name).getAbsolutePath();
+
+        //然后我们开始加载我们的apk 使用DexClassLoader
+        File dexOutDir = activity.getDir("dex", activity.MODE_PRIVATE);
+        loader = new DexClassLoader(path, dexOutDir.getAbsolutePath(), null, activity.getClassLoader());
+
+        //通过PackAgemanager 来获取插件的第一个activity是哪一个
+        PackageManager packageManager = activity.getPackageManager();
+        packageInfo = packageManager.getPackageArchiveInfo(path, PackageManager.GET_ACTIVITIES);
+
+
+        //然后开始加载我们的资源 肯定要使用Resource 但是它是AssetManager创建出来的 就是AssertManager 有一个addAssertPath 这个方法 但是私有的 所有使用反射
+        Class&lt;?&gt; assetManagerClass = AssetManager.class;
+        try {
+            AssetManager assertManagerObj = (AssetManager) assetManagerClass.newInstance();
+            Method addAssetPathMethod = assetManagerClass.getMethod("addAssetPath", String.class);
+            addAssetPathMethod.setAccessible(true);
+            addAssetPathMethod.invoke(assertManagerObj, path);
+            //在创建一个Resource
+            resources = new Resources(assertManagerObj, activity.getResources().getDisplayMetrics(), activity.getResources().getConfiguration());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    //对外提供插件的classLoader
+    public ClassLoader getClassLoader() {
+        return loader;
+    }
+
+    //插件中的Resource
+    public Resources getResource() {
+        return resources;
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../android/webview接受cookie.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../android/生成含有dex的jar.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../android/webview接受cookie.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../android/生成含有dex的jar.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
