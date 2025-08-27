@@ -1959,123 +1959,6 @@ fun main() {
 <div style="break-before: page; page-break-before: always;"></div><hr />
 <h2>bookCollapseSection: true
 weight: 2</h2>
-<div style="break-before: page; page-break-before: always;"></div><h3 id="一个端口配置多个服务"><a class="header" href="#一个端口配置多个服务">一个端口配置多个服务</a></h3>
-<p>实验阶段-------</p>
-<pre><code>server {         
-    listen       80;  
-    server_name  apitest.aa.com;  
-    location / {
-      proxy_pass http://10.26.31.176:8081; #微服务地址测试环境
-      root   html;  
-      index  index.html index.htm;  
-
-    }   
- }
-
- 
-
-server {         
-    listen       80;  
-    server_name  api.aa.com;  
-    location / {  
-        proxy_pass http://10.26.31.176:8080;   #微服务地址线上环境
-        root   html;  
-        index  index.html index.htm;  
-    }   
-}
-
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h3 id="构建nginx容器"><a class="header" href="#构建nginx容器">构建nginx容器</a></h3>
-<pre><code class="language-shell">docker run -itd --name=nginx -p 8088:80 -p 443:443 -v /home/zouni/nginx/conf.d:/etc/nginx/conf.d -v /home/zouni/web/static:/home/zouni/web/static –restart=always –user=root nginx 
- --privileged=true
-docker run -itd --name=nginx -p 8088:80 -p 443:443 -v /home/zouni/nginx/conf.d:/etc/nginx/conf.d -v /home/zouni/web/static:/home/zouni/web/static -user=root nginx:latest
-</code></pre>
-<p>docker run -itd --name=nginx -p 8088:80 -p 443:443 -v /home/zouni88/nginx/conf.d:/etc/nginx/conf.d -v /home/zouni/web/static:/home/zouni88/web/static --restart=always -user=root -privileged=true nginx:latest</p>
-<div style="break-before: page; page-break-before: always;"></div><h4 id="启动"><a class="header" href="#启动">启动</a></h4>
-<pre><code>nginx
-</code></pre>
-<h4 id="查看帮助"><a class="header" href="#查看帮助">查看帮助</a></h4>
-<pre><code>nginx -h  
-</code></pre>
-<h4 id="查看版本-1"><a class="header" href="#查看版本-1">查看版本</a></h4>
-<pre><code>nginx -v
-</code></pre>
-<h4 id="查看配置参数"><a class="header" href="#查看配置参数">查看配置参数</a></h4>
-<pre><code>nginx -V
-</code></pre>
-<h4 id="指定参数"><a class="header" href="#指定参数">指定参数</a></h4>
-<pre><code>nginx -s
-</code></pre>
-<h4 id="测试配置参数是否正确"><a class="header" href="#测试配置参数是否正确">测试配置参数是否正确</a></h4>
-<pre><code>nginx -t -C filename
-</code></pre>
-<h4 id="测试配置是否正确"><a class="header" href="#测试配置是否正确">测试配置是否正确</a></h4>
-<pre><code>nginx -t   
-</code></pre>
-<h4 id="重载每次修改配置信息都需要重载nginx"><a class="header" href="#重载每次修改配置信息都需要重载nginx">重载，每次修改配置信息都需要重载nginx</a></h4>
-<pre><code>nginx -s reload
-</code></pre>
-<h4 id="停止运行"><a class="header" href="#停止运行">停止运行</a></h4>
-<pre><code>nginx -s stop
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h3 id="下载官方nginx-包"><a class="header" href="#下载官方nginx-包">下载官方nginx 包</a></h3>
-<blockquote>
-<p>wget http://nginx.org/download/nginx-1.10.1.tar.gz</p>
-</blockquote>
-<h3 id="配置nginx"><a class="header" href="#配置nginx">配置nginx</a></h3>
-<p>#--prefix 指定安装的目录
-#/usr/local/nginx 是安装目录，不能和自己下载的文件目录重了
-#./configure --prefix=/usr/local/nginx</p>
-<p>#带ssl  stub_status模块 添加strem模块 –with-stream，这样就能传输tcp协议了
-#http_stub_status_module  状态监控
-#http_ssl_module    配置https
-#stream  配置tcp得转发
-#http_gzip_static_module 压缩
-#http_sub_module  替换请求</p>
-<p>./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-stream</p>
-<p>#带用户得方式
-./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-stream --with-http_gzip_static_module --with-http_sub_module</p>
-<hr />
-<h3 id="编译-安装"><a class="header" href="#编译-安装">编译 安装</a></h3>
-<blockquote>
-<p>make &amp;&amp; make install</p>
-</blockquote>
-<div style="break-before: page; page-break-before: always;"></div><h3 id="403异常"><a class="header" href="#403异常">403异常</a></h3>
-<p>第一次配置一般是权限问题
-/etc/nginx/nginx.conf</p>
-<p>use nginx;
-改为：
-use root;</p>
-<div style="break-before: page; page-break-before: always;"></div><p>配置静态站点，有些时候需要返回固定页面，访问url: /site/pageA /site/pageB 都返回index.html页面，这时候需要用到下面配置</p>
-<pre><code>location / {
-    try_files $uri /index.html;
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><pre><code class="language-shell">server {
-    # 监听的端口号
-    listen      80;
-    # 域名
-    server_name your_domain;
-    charset     utf-8;
-
-    # 最大的文件上传尺寸
-    client_max_body_size 75M;
-
-    # 静态文件访问的url
-    location / {
-        # 静态文件地址
-       root /root/web/static/admin;
-        # 过期时间
-       #expires 30d;
-    }
-    # vue 配置 单页面 访问，统统指向index
-error_page 400 304 404 500 502 503 504  /;
-}
-
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><hr />
-<h2>bookCollapseSection: true
-weight: 2</h2>
 <div style="break-before: page; page-break-before: always;"></div><h3 id="常用sql"><a class="header" href="#常用sql">常用sql</a></h3>
 <p>删除字段</p>
 <blockquote>
@@ -2251,7 +2134,6 @@ weight: 2</h2>
 <ul>
 <li>解决方法： 修改wsl 默认登录用户为root</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="compose"><a class="header" href="#compose">compose</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><pre><code class="language-yaml">mysql:
     image: mysql:8.0
     container_name: mysql-container
@@ -2744,27 +2626,6 @@ docker</p>
 <p>构建指令：</p>
 <pre><code class="language-Shell">docker build -f dockerfile-path .
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="变量"><a class="header" href="#变量">变量</a></h1>
-<p>ARG NGINX_VERSION=1.15.0</p>
-<h1 id="ngnix"><a class="header" href="#ngnix">Ngnix</a></h1>
-<p>WORKDIR /tem</p>
-<p>RUN wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz &amp;&amp;<br />
-tar xzf nginx-${NGINX_VERSION}.tar.gz &amp;&amp;<br />
-cd /tmp/nginx-${NGINX_VERSION} $$<br />
-./configure <br />
---prefix=/usr/local/nginx <br />
---with-http_ssl_module <br />
---with-http_sub_module <br />
---with-http_dav_module <br />
---with-http_flv_module <br />
---with-http_gzip_static_module <br />
---with-http_stub_status_module <br />
---with-debug &amp;&amp;<br />
-make &amp;&amp;<br />
-make install</p>
-<pre><code># 设置环境变量
-ENV PATH /usr/local/nginx/sbin:$PATH
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h3 id="运行构建dockerfile"><a class="header" href="#运行构建dockerfile">运行构建dockerfile</a></h3>
 <ol>
 <li><code>-f</code> 指定dockerfile 文件构建镜像</li>
@@ -2888,7 +2749,7 @@ secrets:
 gitea_database_user_password:
 external: true
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust"><a class="header" href="#rust">rust</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><p>rust note</p>
 <div style="break-before: page; page-break-before: always;"></div><h3 id="str和string区别"><a class="header" href="#str和string区别">str和String区别：</a></h3>
 <p>通俗讲 String就像是<code>笔记本</code>,可以往里面写字符串；而str就像是一个<code>标签</code>,引用了<code>笔记本</code>里的一段内容；</p>
 <ul>
@@ -3036,66 +2897,75 @@ g++ -o HelloWorld.exe HelloWorld.o</p>
 <div style="break-before: page; page-break-before: always;"></div><hr />
 <h2>bookCollapseSection: true
 weight: 2</h2>
-<div style="break-before: page; page-break-before: always;"></div><p>#!/bin/bash -v</p>
-<p>echo "ffmpeg start"
-NDK_ROOT=/mnt/e/WorkRoom/ubuntu/android-ndk-r22b/toolchains/llvm/prebuilt/linux-x86_64
-SYSROOT=$NDK_ROOT/sysroot</p>
-<p>function build {
-./configure  <br />
---prefix=$PREFIX <br />
---arch=$ARCH <br />
---cpu=$CPU <br />
---target-os=android <br />
---sysroot=$SYSROOT <br />
---cross-prefix=$CROSS_PREFIX <br />
---extra-cflags="-I$SYSROOT/usr/include -fPIC -DANDROID -mfpu=neon -mfloat-abi=softfp " <br />
---extra-ldflags="-L$SYSROOT/usr/lib" <br />
---cc=$CC <br />
---nm=$NM <br />
---cxx=$CXX <br />
---enable-runtime-cpudetect <br />
---enable-neon <br />
---enable-shared <br />
---enable-asm <br />
---disable-static <br />
---enable-cross-compile <br />
---enable-small <br />
---enable-jni <br />
---enable-mediacodec <br />
---enable-gpl <br />
---enable-decoder=h264_mediacodec <br />
---disable-doc <br />
---disable-debug <br />
---disable-ffmpeg <br />
---disable-ffplay <br />
---disable-ffprobe <br />
---disable-postproc <br />
---disable-avdevice <br />
---disable-symver <br />
---disable-stripping
-make -j8
-make install
-make clean
-echo "ffmpeg complete!!!"
-}</p>
-<p>echo "ffmpeg armv7 start"
-PREFIX="/mnt/e/WorkRoom/ffmpeg/armv7"
-ARCH=arm
-CPU=armv7-a
-CROSS_PREFIX=$NDK_ROOT/bin/arm-linux-android-
-CC=$NDK_ROOT/bin/armv7a-linux-androideabi21-clang <br />
-NM=$NDK_ROOT/bin/arm-linux-androideabi-nm <br />
-CXX=$NDK_ROOT/bin/armv7a-linux-androideabi21-clang++ <br />
-build</p>
-<p>echo "ffmpeg armv8 start"
-PREFIX="/mnt/e/WorkRoom/ffmpeg/armv8"
-ARCH=aarch64
-CPU=armv8
-CROSS_PREFIX=$NDK_ROOT/bin/aarch64-linux-android-
-CC=$NDK_ROOT/bin/aarch64-linux-android21-clang
-NM=$NDK_ROOT/bin/aarch64-linux-android-nm
-CXX=$NDK_ROOT/bin/aarch64-linux-android21-clang++
-build</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="clion-stm32-开发环境搭建"><a class="header" href="#clion-stm32-开发环境搭建">clion+ stm32 开发环境搭建</a></h1>
+<p><a href="https://www.jetbrains.com/help/clion/2021.2/embedded-development.html">参考jetbrains官方指导</a></p>
+<h1 id="准备"><a class="header" href="#准备">准备</a></h1>
+<h2 id="1-clion"><a class="header" href="#1-clion">1. clion</a></h2>
+<h2 id="2-gcc-arm-none-eabi"><a class="header" href="#2-gcc-arm-none-eabi">2. gcc-arm-none-eabi</a></h2>
+<p><a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">下载 gcc-arm-none-eabi-10.3-2021.10-win32.exe</a>
+一键安装：最后一步勾选（path添加到环境变量，否则编译程序找不到编译器）</p>
+<h2 id="3-mingw-get-setupexe"><a class="header" href="#3-mingw-get-setupexe">3. mingw-get-setup.exe</a></h2>
+<p>安装之后，配置clion Toolchains 环境就可以了</p>
+<h2 id="4-stm32cubemx-winzip"><a class="header" href="#4-stm32cubemx-winzip">4. stm32cubemx-win.zip</a></h2>
+<p>这一步没什么特殊 一键安装</p>
+<h2 id="5-openocd"><a class="header" href="#5-openocd">5. OpenOCD</a></h2>
+<h3 id="51-openocd-配置"><a class="header" href="#51-openocd-配置">5.1 openOCD 配置</a></h3>
+<p>配置ST-link烧写器配置文件
+stm32f103_stlink.cfg</p>
+<pre><code class="language-config">source [find interface/stlink.cfg]
+transport select hla_swd
+source [find target/stm32f1x.cfg]
+adapter speed 2000  // adapter_khz 2000
+</code></pre>
+<p>保存到openOCD脚本目录下：<br />
+D:\WorkRoom\embedded\stm32\OpenOCD-20210729-0.11.0\share\openocd\scripts\board</p>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="串口引脚定义"><a class="header" href="#串口引脚定义">串口引脚定义</a></h3>
+<ol>
+<li>DTR : 数据终端准备好</li>
+<li>RTS: 请求发送</li>
+<li>RXD: 接收</li>
+<li>TXD: 发送</li>
+<li>CTS: 清除发送</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="ttl"><a class="header" href="#ttl">TTL</a></h3>
+<ul>
+<li>
+<p>输出 <code>1</code> :=&gt; 电压大于等于 <code>2.4v</code>  <code>0</code> :=&gt; 电压小于等于 <code>0.4v</code></p>
+</li>
+<li>
+<p>输入 <code>1</code> :=&gt; 电压大于等于<code>2.0v</code>  <code>0</code> :=&gt; 电压小于等于<code>0.8v</code></p>
+</li>
+</ul>
+<p>TTL器件输出低电平要小于0.8V，高电平要大于2.4V。输入，低于1.2V就认为是0，高于2.0就认为是1。于是TTL电平的输入低电平的噪声容限（噪声容限是指在前一极输出为最坏的情况下，为保证后一极正常工作，所允许的最大噪声幅度 。噪声容限越大说明容许的噪声越大，电路的抗干扰性越好 。）就只有（0.8-0）/2=0.4V，高电平的噪声容限为（5-2.4）/2=1.3V。</p>
+<h3 id="cmos"><a class="header" href="#cmos">CMOS</a></h3>
+<ul>
+<li>
+<p>输出 L：<code>0</code> &lt;0.1<em>Vcc ； <code>1</code> H：&gt;0.9</em>Vcc。</p>
+</li>
+<li>
+<p>输入 L：<code>0</code> &lt;0.3<em>Vcc ； <code>1</code> H：&gt;0.7</em>Vcc.</p>
+</li>
+</ul>
+<p>由于CMOS电源采用12V，则输入低于3.6V为低电平，噪声容限为1.8V，高于3.5V为高电平，噪声容限高为1.8V。比TTL有更高的噪声容限。</p>
+<p>CMOS电平能够驱动TTL电平；</p>
+<p>TTL电平不能驱动CMOS电平，需要加上拉电阻</p>
+<h3 id="rs232"><a class="header" href="#rs232">RS232</a></h3>
+<ul>
+<li>逻辑1的电平为-3～-15V，逻辑0的电平为+3～+15V，注意电平的定义反相了一次。</li>
+</ul>
+<p>RS232的电平标准为+12V为逻辑负，-12为逻辑正，TTL电平为5V为逻辑正，0为逻辑负</p>
+<h3 id="rs485"><a class="header" href="#rs485">RS485</a></h3>
+<ul>
+<li>RS485采用差分信号负逻辑，逻辑"1”以两线间的电压差为-(2~6)V表示;逻辑"0"以两线间的电压差为+(2~6)V表示。</li>
+</ul>
+<p>TTL接口电平常见的有3.3V和5V的。通过在0和TTL电平之间摆动，来传输数据。需要通讯双方“约定”好速率。也就是说，通过TTL电平传输的UART接口是一种不传输时钟的"异步通讯"方式。</p>
+<p>而RS485接口，简单说就是把TTL的“0-3.3V/5V之间摆动”的信号，转换为“5V压差颠倒反转的AB线信号”，并且扩流驱动电缆电容。简单说就是这样。</p>
+<p>所以可以理解为，RS485是以TTL数据源的总线驱动芯片。</p>
+<p>RS485采用差分信号逻辑，更适合长距离、高速传输。</p>
+<p>接口信号电平比RS-232-C降低了，就不易损坏接口电路的芯片， 且该电平与TTL电平兼容，可方便与TTL电路连接。</p>
+<div style="break-before: page; page-break-before: always;"></div><hr />
+<h2>bookCollapseSection: true
+weight: 2</h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="1-交叉编译-ffmpeg---aarch64"><a class="header" href="#1-交叉编译-ffmpeg---aarch64">1. 交叉编译 ffmpeg -&gt; aarch64</a></h1>
 <h2 id="11参数说明"><a class="header" href="#11参数说明">1.1参数说明：</a></h2>
 <pre><code>--cross-prefix 指定交叉编译工具链路径
@@ -3364,8 +3234,6 @@ weight: 2</h2>
 <li><code>Use Locales</code> 前面的勾选去掉</li>
 <li>下面添加 <code>en-US</code></li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="blog"><a class="header" href="#blog">blog</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="github"><a class="header" href="#github">github</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h3 id="github创建项目"><a class="header" href="#github创建项目">github创建项目</a></h3>
 <ol>
 <li>创建仓库，项目名字要用<code>username.github.io</code></li>
@@ -3397,7 +3265,7 @@ weight: 2</h2>
 <ol start="4">
 <li>浏览器访问 https://username.github.io.</li>
 </ol>
-<p><img src="https://pages.github.com/?(null)" alt="Github官方说明" /></p>
+<p><a href="https://pages.github.com/">Github官方说明</a></p>
 <div style="break-before: page; page-break-before: always;"></div><hr />
 <h2>bookCollapseSection: true
 weight: 2</h2>
@@ -3525,6 +3393,23 @@ git submodule add https://github.com/alex-shpak/hugo-book themes/book</p>
 <blockquote>
 <p>hugo server --theme=photophobia --buildDrafts --watch</p>
 </blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="mdbook-book文档书写工具rust-lang-官方出品"><a class="header" href="#mdbook-book文档书写工具rust-lang-官方出品">mdbook: book文档书写工具：rust-lang 官方出品</a></h2>
+<p>https://github.com/rust-lang/mdBook</p>
+<h3 id="支持mermaid-插件-安装"><a class="header" href="#支持mermaid-插件-安装">支持mermaid 插件 安装</a></h3>
+<blockquote>
+<p>cargo install mdbook-mermaid</p>
+</blockquote>
+<h3 id="这一步会下载-mermaid相关js文件"><a class="header" href="#这一步会下载-mermaid相关js文件">这一步会下载 mermaid相关js文件</a></h3>
+<blockquote>
+<p>mdbook-mermaid install .</p>
+</blockquote>
+<h3 id="booktoml中添加如下"><a class="header" href="#booktoml中添加如下">book.toml中添加如下</a></h3>
+<pre><code class="language-toml">[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><hr />
 <h2>bookCollapseSection: true
 weight: 2</h2>
@@ -7188,7 +7073,201 @@ Root
     Alice-&gt;John: See you later!
 
 </pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nas"><a class="header" href="#nas">nas</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><p>群晖nas配置 ssh连接，root用户登录</p>
+<p>群晖默认不支持root权限登录，需要修改权限</p>
+<ol>
+<li>
+<p>普通管理员用户登录之后，找到 <code>/etc/ssh/sshd_config</code>文件</p>
+</li>
+<li>
+<p>修改sshd_config 权限</p>
+<pre><code>chmod 755 sshd_config 
+</code></pre>
+</li>
+<li>
+<p>编辑<code>sshd_config</code>文件，找到</p>
+<pre><code>#PermitRootLogin prohibit-password  
+# 修改成 yes
+PermitRootLogin yes
+</code></pre>
+<p>退出编辑</p>
+</li>
+<li>
+<p>修改root密码</p>
+<pre><code>synouser --setpw root 这里是新密码
+</code></pre>
+</li>
+<li>
+<p>退出重新用root登录 . OK!</p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><hr />
+<h2>bookCollapseSection: true
+weight: 2</h2>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="一个端口配置多个服务"><a class="header" href="#一个端口配置多个服务">一个端口配置多个服务</a></h3>
+<p>实验阶段-------</p>
+<pre><code>server {         
+    listen       80;  
+    server_name  apitest.aa.com;  
+    location / {
+      proxy_pass http://10.26.31.176:8081; #微服务地址测试环境
+      root   html;  
+      index  index.html index.htm;  
+
+    }   
+ }
+
+ 
+
+server {         
+    listen       80;  
+    server_name  api.aa.com;  
+    location / {  
+        proxy_pass http://10.26.31.176:8080;   #微服务地址线上环境
+        root   html;  
+        index  index.html index.htm;  
+    }   
+}
+
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="构建nginx容器"><a class="header" href="#构建nginx容器">构建nginx容器</a></h3>
+<pre><code class="language-shell">docker run -itd --name=nginx -p 8088:80 -p 443:443 -v /home/zouni/nginx/conf.d:/etc/nginx/conf.d -v /home/zouni/web/static:/home/zouni/web/static –restart=always –user=root nginx 
+ --privileged=true
+docker run -itd --name=nginx -p 8088:80 -p 443:443 -v /home/zouni/nginx/conf.d:/etc/nginx/conf.d -v /home/zouni/web/static:/home/zouni/web/static -user=root nginx:latest
+</code></pre>
+<p>docker run -itd --name=nginx -p 8088:80 -p 443:443 -v /home/zouni88/nginx/conf.d:/etc/nginx/conf.d -v /home/zouni/web/static:/home/zouni88/web/static --restart=always -user=root -privileged=true nginx:latest</p>
+<div style="break-before: page; page-break-before: always;"></div><h4 id="启动"><a class="header" href="#启动">启动</a></h4>
+<pre><code>nginx
+</code></pre>
+<h4 id="查看帮助"><a class="header" href="#查看帮助">查看帮助</a></h4>
+<pre><code>nginx -h  
+</code></pre>
+<h4 id="查看版本-1"><a class="header" href="#查看版本-1">查看版本</a></h4>
+<pre><code>nginx -v
+</code></pre>
+<h4 id="查看配置参数"><a class="header" href="#查看配置参数">查看配置参数</a></h4>
+<pre><code>nginx -V
+</code></pre>
+<h4 id="指定参数"><a class="header" href="#指定参数">指定参数</a></h4>
+<pre><code>nginx -s
+</code></pre>
+<h4 id="测试配置参数是否正确"><a class="header" href="#测试配置参数是否正确">测试配置参数是否正确</a></h4>
+<pre><code>nginx -t -C filename
+</code></pre>
+<h4 id="测试配置是否正确"><a class="header" href="#测试配置是否正确">测试配置是否正确</a></h4>
+<pre><code>nginx -t   
+</code></pre>
+<h4 id="重载每次修改配置信息都需要重载nginx"><a class="header" href="#重载每次修改配置信息都需要重载nginx">重载，每次修改配置信息都需要重载nginx</a></h4>
+<pre><code>nginx -s reload
+</code></pre>
+<h4 id="停止运行"><a class="header" href="#停止运行">停止运行</a></h4>
+<pre><code>nginx -s stop
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="下载官方nginx-包"><a class="header" href="#下载官方nginx-包">下载官方nginx 包</a></h3>
+<blockquote>
+<p>wget http://nginx.org/download/nginx-1.10.1.tar.gz</p>
+</blockquote>
+<h3 id="配置nginx"><a class="header" href="#配置nginx">配置nginx</a></h3>
+<p>#--prefix 指定安装的目录
+#/usr/local/nginx 是安装目录，不能和自己下载的文件目录重了
+#./configure --prefix=/usr/local/nginx</p>
+<p>#带ssl  stub_status模块 添加strem模块 –with-stream，这样就能传输tcp协议了
+#http_stub_status_module  状态监控
+#http_ssl_module    配置https
+#stream  配置tcp得转发
+#http_gzip_static_module 压缩
+#http_sub_module  替换请求</p>
+<p>./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-stream</p>
+<p>#带用户得方式
+./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-stream --with-http_gzip_static_module --with-http_sub_module</p>
+<hr />
+<h3 id="编译-安装"><a class="header" href="#编译-安装">编译 安装</a></h3>
+<blockquote>
+<p>make &amp;&amp; make install</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="403异常"><a class="header" href="#403异常">403异常</a></h3>
+<p>第一次配置一般是权限问题
+/etc/nginx/nginx.conf</p>
+<p>use nginx;
+改为：
+use root;</p>
+<div style="break-before: page; page-break-before: always;"></div><p>配置静态站点，有些时候需要返回固定页面，访问url: /site/pageA /site/pageB 都返回index.html页面，这时候需要用到下面配置</p>
+<pre><code>location / {
+    try_files $uri /index.html;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><pre><code class="language-shell">server {
+    # 监听的端口号
+    listen      80;
+    # 域名
+    server_name your_domain;
+    charset     utf-8;
+
+    # 最大的文件上传尺寸
+    client_max_body_size 75M;
+
+    # 静态文件访问的url
+    location / {
+        # 静态文件地址
+       root /root/web/static/admin;
+        # 过期时间
+       #expires 30d;
+    }
+    # vue 配置 单页面 访问，统统指向index
+error_page 400 304 404 500 502 503 504  /;
+}
+
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><hr />
+<h2>bookCollapseSection: true
+weight: 2</h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="公司里接口编写规范"><a class="header" href="#公司里接口编写规范">公司里接口编写规范：</a></h1>
+<h2 id="返回值的规范"><a class="header" href="#返回值的规范">返回值的规范：</a></h2>
+<pre><code class="language-json">{
+    "code":200,
+    "msg": "",
+    "data":{
+        "name":'xxx',
+        "age":'xxx'
+    }
+}
+</code></pre>
+<h2 id="状态码的规范"><a class="header" href="#状态码的规范">状态码的规范：</a></h2>
+<ol>
+<li>200：成功。</li>
+<li>401：没有授权。</li>
+<li>400：参数错误。</li>
+<li>500：服务器错误。</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="性能测试工具使用"><a class="header" href="#性能测试工具使用">性能测试工具使用</a></h2>
+<p>1.安装</p>
+<pre><code>git clone https://github.com/wg/wrk
+cd wrk
+make # 编译
+
+cp wrk /usr/local/sbin # 二进制文件 放入非管理员目录，可直接运行命令
+</code></pre>
+<blockquote>
+<p>wrk http://163.com</p>
+</blockquote>
+<pre><code>  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    32.49ms   56.14ms 230.86ms   84.38%
+    Req/Sec   637.05    222.35     1.09k    63.00%
+  12710 requests in 10.03s, 6.71MB read
+Requests/sec:   1267.57
+Transfer/sec:    685.72KB
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><div class="table-wrapper"><table><thead><tr><th>英文</th><th>中文</th></tr></thead><tbody>
+<tr><td>trigger</td><td>触发</td></tr>
+<tr><td>necessary</td><td>必要的</td></tr>
+<tr><td>depending</td><td>依赖</td></tr>
+<tr><td>logic</td><td>逻辑</td></tr>
+<tr><td>acquire</td><td>获取</td></tr>
+<tr><td>heavy</td><td>重；大；沉重</td></tr>
+<tr><td>separate</td><td>单独的，分离的</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><hr />
 <h2>bookCollapseSection: true
 weight: 2</h2>
 <div style="break-before: page; page-break-before: always;"></div><h3 id="ipython是一个增强的shell工具"><a class="header" href="#ipython是一个增强的shell工具">IPython是一个增强的shell工具,</a></h3>
@@ -7206,13 +7285,7 @@ weight: 2</h2>
 <pre><code class="language-shell">python -m SimpleHTTPServer 8888
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h3 id="python-小图片合成大图片"><a class="header" href="#python-小图片合成大图片">python 小图片合成大图片</a></h3>
-<p>这段代码是前两年搞的，有很长时间没动了，正好是在学习python的时候拿来练手的。</p>
-<blockquote>
-<p>先说一下前因后果为什么要做这个，起初的想法是一个朋友给的，他手机存了很多女儿的照片，有一天他告诉我：他希望有个工具能把这些照片合成一个图片墙，在手机看毕竟不方便，希望能有一些小创意，为以后孩子大了留个回忆；可巧不巧正好快赶上七夕了，就想着给媳妇一个惊喜，所以就赶紧把相册里的给媳妇以前拍的照片收集了一下，切图工具把一些照片简单处理了一下；</p>
-</blockquote>
-<p>基于以上种种，哈哈，就搞了这么个玩意儿！
-但是代码写的比较烂，懒得贴代码了，链接放在这里：有兴趣的可以看看
-主要代码放在<code>ConcatImg/concat_img/concat.py</code>这个文件
+<p>主要代码放在<code>ConcatImg/concat_img/concat.py</code>这个文件
 https://github.com/SmallCao/ConcatImg</p>
 <p>最终效果
 <img src="python//res/python/aaa.jpg" alt="原图" /><br />
@@ -8255,6 +8328,20 @@ assert a&gt;0
     assert a&gt;0
 AssertionError
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="res"><a class="header" href="#res">res</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><hr />
+<h2>bookCollapseSection: true
+weight: 2</h2>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="下载"><a class="header" href="#下载">下载</a></h3>
+<pre><code class="language-shell">go install github.com/shadowsocks/go-shadowsocks2
+</code></pre>
+<h3 id="运行"><a class="header" href="#运行">运行</a></h3>
+<pre><code class="language-shell">go-shadowsocks2 -s 'ss://AEAD_CHACHA20_POLY1305:qaz521..@:8488' -verbose
+</code></pre>
+<h3 id="客户端"><a class="header" href="#客户端">客户端</a></h3>
+<pre><code class="language-shell">go-shadowsocks2 -c 'ss://AEAD_CHACHA20_POLY1305:qaz521..@[zouni.vip]:8488' -verbose -socks :1080 -u -udptun :8053=8.8.8.8:53,:8054=8.8.4.4:53 -tcptun :8053=8.8.8.8:53,:8054=8.8.4.4:53
+</code></pre>
+<p>go-shadowsocks2 -c 'ss://AEAD_CHACHA20_POLY1305:qaz521..@[zouni.vip]:8488' -redir :1082 -redir6 :1083</p>
 
                     </main>
 

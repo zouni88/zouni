@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>错误记录 - zouni</title>
+        <title>init - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,23 +175,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h3 id="dial-unix-runcontainerdcontainerdsock-connect-permission-denied"><a class="header" href="#dial-unix-runcontainerdcontainerdsock-connect-permission-denied">dial unix /run/containerd/containerd.sock: connect: permission denied"</a></h3>
-<p>正常修改权限就可以了，开发电脑用的wsl2,goland-&gt; run target-&gt; wsl，这种方式进行开发调试的。</p>
-<ul>
-<li>解决方法： 修改wsl 默认登录用户为root</li>
-</ul>
+                        <h3 id="下载"><a class="header" href="#下载">下载</a></h3>
+<pre><code class="language-shell">go install github.com/shadowsocks/go-shadowsocks2
+</code></pre>
+<h3 id="运行"><a class="header" href="#运行">运行</a></h3>
+<pre><code class="language-shell">go-shadowsocks2 -s 'ss://AEAD_CHACHA20_POLY1305:qaz521..@:8488' -verbose
+</code></pre>
+<h3 id="客户端"><a class="header" href="#客户端">客户端</a></h3>
+<pre><code class="language-shell">go-shadowsocks2 -c 'ss://AEAD_CHACHA20_POLY1305:qaz521..@[zouni.vip]:8488' -verbose -socks :1080 -u -udptun :8053=8.8.8.8:53,:8054=8.8.4.4:53 -tcptun :8053=8.8.8.8:53,:8054=8.8.4.4:53
+</code></pre>
+<p>go-shadowsocks2 -c 'ss://AEAD_CHACHA20_POLY1305:qaz521..@[zouni.vip]:8488' -redir :1082 -redir6 :1083</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../container/1.windows使用containerd.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../shadowsocks2/_index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../container/compose/mysql.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -199,13 +201,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../container/1.windows使用containerd.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../shadowsocks2/_index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../container/compose/mysql.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
