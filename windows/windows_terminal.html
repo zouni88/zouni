@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>编译过程 - zouni</title>
+        <title>windows terminal - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,25 +175,49 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h3 id="编译过程描述"><a class="header" href="#编译过程描述">编译过程描述</a></h3>
-<p>//生成预处理文件<br />
-g++ -o HelloWorld.ii -E HelloWorld.cpp<br />
-//生成汇编文件<br />
-g++ -o HelloWorld.s -S HelloWorld.ii<br />
-//生成二进制也就是目标文件<br />
-g++ -o HelloWorld.o -c HelloWorld.s<br />
-//生成可执行文件
-g++ -o HelloWorld.exe HelloWorld.o</p>
+                        <ol>
+<li>
+<p>windows新终端
+<img src="/res/windows/w_ter.png" alt="windows terminal" /></p>
+</li>
+<li>
+<p>可以自定义主题</p>
+<ol>
+<li>
+<p>打开设置<br />
+<img src="/res/windows/setting.png" alt="打开设置" /></p>
+</li>
+<li>
+<p>在这里选择一个喜欢的 <a href="https://atomcorp.github.io/themes/">主题</a></p>
+</li>
+</ol>
+<p><img src="/res/windows/theme_site.png" alt="选择主题" /></p>
+<p>将选择好的主题配置信息，放在下图<code>schemes</code>集合里</p>
+<p><img src="/res/windows/config_modify.png" alt="修改配置文件" /></p>
+<p>修改上图<code>list</code>增加<code>colorScheme</code> 名字对应添加的schemes中的<code>name</code></p>
+</li>
+</ol>
+<h2 id="不够炫酷修改背景图片"><a class="header" href="#不够炫酷修改背景图片">不够炫酷？修改背景图片，</a></h2>
+<pre><code>"backgroundImage": "E:\\bg.png",
+"backgroundImageOpacity": 0.3,
+"backgroundImageStretchMode":"none", # 有四个选项 uniformToFill | none | fill | uniform 
+
+</code></pre>
+<p><img src="/res/windows/set_bg_image.png" alt="背景图设置" /><br />
+<code>注意图片路径的反斜杠-转义或者用正斜杠</code>：'/' 否则会设置失败</p>
+<h2 id="最终效果"><a class="header" href="#最终效果">最终效果：</a></h2>
+<p><img src="/res/windows/design.png" alt="效果图" />
+重新打开终端，ok</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../C_CXX/原码反码补码.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../windows/vscode复制粘贴文件.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../embedded/_index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../windows/wsl-ubuntu开启ssh.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -203,11 +227,11 @@ g++ -o HelloWorld.exe HelloWorld.o</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../C_CXX/原码反码补码.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../windows/vscode复制粘贴文件.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../embedded/_index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../windows/wsl-ubuntu开启ssh.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

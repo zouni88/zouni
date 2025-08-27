@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ff.sh - zouni</title>
+        <title>nas - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,76 +175,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>#!/bin/bash -v</p>
-<p>echo "ffmpeg start"
-NDK_ROOT=/mnt/e/WorkRoom/ubuntu/android-ndk-r22b/toolchains/llvm/prebuilt/linux-x86_64
-SYSROOT=$NDK_ROOT/sysroot</p>
-<p>function build {
-./configure  <br />
---prefix=$PREFIX <br />
---arch=$ARCH <br />
---cpu=$CPU <br />
---target-os=android <br />
---sysroot=$SYSROOT <br />
---cross-prefix=$CROSS_PREFIX <br />
---extra-cflags="-I$SYSROOT/usr/include -fPIC -DANDROID -mfpu=neon -mfloat-abi=softfp " <br />
---extra-ldflags="-L$SYSROOT/usr/lib" <br />
---cc=$CC <br />
---nm=$NM <br />
---cxx=$CXX <br />
---enable-runtime-cpudetect <br />
---enable-neon <br />
---enable-shared <br />
---enable-asm <br />
---disable-static <br />
---enable-cross-compile <br />
---enable-small <br />
---enable-jni <br />
---enable-mediacodec <br />
---enable-gpl <br />
---enable-decoder=h264_mediacodec <br />
---disable-doc <br />
---disable-debug <br />
---disable-ffmpeg <br />
---disable-ffplay <br />
---disable-ffprobe <br />
---disable-postproc <br />
---disable-avdevice <br />
---disable-symver <br />
---disable-stripping
-make -j8
-make install
-make clean
-echo "ffmpeg complete!!!"
-}</p>
-<p>echo "ffmpeg armv7 start"
-PREFIX="/mnt/e/WorkRoom/ffmpeg/armv7"
-ARCH=arm
-CPU=armv7-a
-CROSS_PREFIX=$NDK_ROOT/bin/arm-linux-android-
-CC=$NDK_ROOT/bin/armv7a-linux-androideabi21-clang <br />
-NM=$NDK_ROOT/bin/arm-linux-androideabi-nm <br />
-CXX=$NDK_ROOT/bin/armv7a-linux-androideabi21-clang++ <br />
-build</p>
-<p>echo "ffmpeg armv8 start"
-PREFIX="/mnt/e/WorkRoom/ffmpeg/armv8"
-ARCH=aarch64
-CPU=armv8
-CROSS_PREFIX=$NDK_ROOT/bin/aarch64-linux-android-
-CC=$NDK_ROOT/bin/aarch64-linux-android21-clang
-NM=$NDK_ROOT/bin/aarch64-linux-android-nm
-CXX=$NDK_ROOT/bin/aarch64-linux-android21-clang++
-build</p>
+                        <h1 id="nas"><a class="header" href="#nas">nas</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../ffmpeg/_index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../mermaid/zenuml.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../ffmpeg/交叉编译.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../nas/synology-config.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -254,11 +195,11 @@ build</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../ffmpeg/_index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../mermaid/zenuml.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../ffmpeg/交叉编译.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../nas/synology-config.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

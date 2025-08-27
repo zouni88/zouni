@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>windows terminal - zouni</title>
+        <title>mdbook - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,17 +175,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="windows-terminal"><a class="header" href="#windows-terminal">windows terminal</a></h1>
+                        <h2 id="mdbook-book文档书写工具rust-lang-官方出品"><a class="header" href="#mdbook-book文档书写工具rust-lang-官方出品">mdbook: book文档书写工具：rust-lang 官方出品</a></h2>
+<p>https://github.com/rust-lang/mdBook</p>
+<h3 id="支持mermaid-插件-安装"><a class="header" href="#支持mermaid-插件-安装">支持mermaid 插件 安装</a></h3>
+<blockquote>
+<p>cargo install mdbook-mermaid</p>
+</blockquote>
+<h3 id="这一步会下载-mermaid相关js文件"><a class="header" href="#这一步会下载-mermaid相关js文件">这一步会下载 mermaid相关js文件</a></h3>
+<blockquote>
+<p>mdbook-mermaid install .</p>
+</blockquote>
+<h3 id="booktoml中添加如下"><a class="header" href="#booktoml中添加如下">book.toml中添加如下</a></h3>
+<pre><code class="language-toml">[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[output.html]
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../windows/vscode复制粘贴文件.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../blog/hugo/init.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../windows/wsl-ubuntu开启ssh.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../RaspberryPi/_index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -195,11 +211,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../windows/vscode复制粘贴文件.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../blog/hugo/init.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../windows/wsl-ubuntu开启ssh.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../RaspberryPi/_index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

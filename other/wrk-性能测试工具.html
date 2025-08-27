@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>编译过程 - zouni</title>
+        <title>wrk-性能测试工具 - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,25 +175,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h3 id="编译过程描述"><a class="header" href="#编译过程描述">编译过程描述</a></h3>
-<p>//生成预处理文件<br />
-g++ -o HelloWorld.ii -E HelloWorld.cpp<br />
-//生成汇编文件<br />
-g++ -o HelloWorld.s -S HelloWorld.ii<br />
-//生成二进制也就是目标文件<br />
-g++ -o HelloWorld.o -c HelloWorld.s<br />
-//生成可执行文件
-g++ -o HelloWorld.exe HelloWorld.o</p>
+                        <h2 id="性能测试工具使用"><a class="header" href="#性能测试工具使用">性能测试工具使用</a></h2>
+<p>1.安装</p>
+<pre><code>git clone https://github.com/wg/wrk
+cd wrk
+make # 编译
+
+cp wrk /usr/local/sbin # 二进制文件 放入非管理员目录，可直接运行命令
+</code></pre>
+<blockquote>
+<p>wrk http://163.com</p>
+</blockquote>
+<pre><code>  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    32.49ms   56.14ms 230.86ms   84.38%
+    Req/Sec   637.05    222.35     1.09k    63.00%
+  12710 requests in 10.03s, 6.71MB read
+Requests/sec:   1267.57
+Transfer/sec:    685.72KB
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../C_CXX/原码反码补码.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../other/公司里接口编写规范.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../embedded/_index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../other/常用单词记录.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -203,11 +212,11 @@ g++ -o HelloWorld.exe HelloWorld.o</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../C_CXX/原码反码补码.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../other/公司里接口编写规范.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../embedded/_index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../other/常用单词记录.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
