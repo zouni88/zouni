@@ -15,11 +15,22 @@ skip_first = true  # 跳过第一个标题（通常是全书标题）
 command = "mdbook-mermaid"
 
 [output.html]
-# 侧边栏是否默认展开所有章节（默认 false）
-expand-sections = false
-
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
+# 启用目录折叠功能（默认值为 false）
+fold.enable = true
+# 折叠层级：值越高，默认展开的层级越多（默认值为 0）
+fold.level = 0
+
 # 显示目录（默认 true）
 toc = false
 # 目录的最大深度（默认 3）
 toc-depth = 5
+
+[output.html.search]
+limit-results = 20
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 2
+boost-paragraph = 1
+expand = true
+heading-split-level = 2
