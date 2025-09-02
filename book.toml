@@ -25,6 +25,8 @@ fold.level = 0
 toc = false
 # 目录的最大深度（默认 3）
 toc-depth = 5
+# 显示代码行号
+code-line-numbers = true
 
 [output.html.search]
 limit-results = 20
