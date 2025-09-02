@@ -3,6 +3,8 @@ title = "zouni"
 authors = ["zouni88"]
 language = "en"
 
+expand-sections = false
+
 [preprocessor.toc]
 command = "mdbook-toc"
 renderer = ["md"]
