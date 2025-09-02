@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>str&amp;String区别 - zouni</title>
+        <title>所有权 - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,32 +175,166 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h3 id="str和string区别"><a class="header" href="#str和string区别">str和String区别：</a></h3>
-<p>通俗讲 String就像是<code>笔记本</code>,可以往里面写字符串；而str就像是一个<code>标签</code>,引用了<code>笔记本</code>里的一段内容；</p>
+                        <h3 id="rust-引用类似java中的对象引用如果是直接赋值某个变量就意味着所有权转移"><a class="header" href="#rust-引用类似java中的对象引用如果是直接赋值某个变量就意味着所有权转移">rust 引用类似java中的对象引用，如果是直接赋值某个变量，就意味着所有权转移</a></h3>
 <ul>
-<li>String 是 Rust 标准库提供的可变、拥有所有权的字符串类型，底层是堆分配，可以动态增长和修改。</li>
-<li>str 是不可变的字符串切片类型，通常以 &amp;str 形式出现，指向某个字符串的一部分，不能直接修改内容。</li>
-<li>String 可以通过 .as_str() 方法转换为 &amp;str，而 &amp;str 可以通过 .to_string() 或 String::from() 转换为 String。</li>
+<li>引用|借用是指向被引用内存地址</li>
+<li>所有权转移，原变量失效不可再用</li>
 </ul>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let x = String::from("hi zouni");
-let y:&amp;str = &amp;x[1..2];
-
-//&amp;str -&gt; String
-let x = "world";
-let y:String = x.to_string();
+</span>let x = String::from("hello");
+let y = &amp;x;
+println!("x的内存地址：{:p}",y);
+let z = &amp;y;
+println!("{:p}",*z);
+println!("{:p}",&amp;z);
+println!("{:p}",&amp;x);
 <span class="boring">}</span></code></pre></pre>
+<h3 id="所有权规则ownership-rules"><a class="header" href="#所有权规则ownership-rules">所有权规则（Ownership Rules）</a></h3>
+<h4 id="1每个值都有一个所有者each-value-has-one-owner"><a class="header" href="#1每个值都有一个所有者each-value-has-one-owner">1.每个值都有一个所有者（Each value has one owner）</a></h4>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from("hello"); // s1 是 "hello" 的所有者
+let s2 = s1;                    // 所有权从 s1 移动到 s2
+// println!("{}", s1);          // 错误！s1 已经不再有效
+<span class="boring">}</span></code></pre></pre>
+<h4 id="2-同一时刻只能有一个所有者only-one-owner-at-a-time"><a class="header" href="#2-同一时刻只能有一个所有者only-one-owner-at-a-time">2. 同一时刻只能有一个所有者（Only one owner at a time）</a></h4>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from("hello");
+let s2 = s1;                    // s1 的所有权移动到 s2
+// s1 在这里已经无效了
+<span class="boring">}</span></code></pre></pre>
+<h4 id="3-当所有者离开作用域时值会被丢弃value-is-dropped-when-owner-goes-out-of-scope"><a class="header" href="#3-当所有者离开作用域时值会被丢弃value-is-dropped-when-owner-goes-out-of-scope">3. 当所有者离开作用域时，值会被丢弃（Value is dropped when owner goes out of scope）</a></h4>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{
+    let s = String::from("hello"); // s 进入作用域
+    // 使用 s
+} // s 离开作用域，内存被自动释放
+<span class="boring">}</span></code></pre></pre>
+<p>移动语义（Move Semantics）
+基本类型（实现了 Copy trait）</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+let y = x;        // x 被复制给 y，x 仍然有效
+println!("{}", x); // 正常工作
+<span class="boring">}</span></code></pre></pre>
+<p>复杂类型（未实现 Copy trait）</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from("hello");
+let s2 = s1;        // s1 的所有权移动到 s2
+// println!("{}", s1); // 编译错误！
+<span class="boring">}</span></code></pre></pre>
+<p>借用规则（Borrowing Rules）</p>
+<ol>
+<li>不可变借用规则</li>
+</ol>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut s = String::from("hello");
+let r1 = &amp;s;    // 不可变借用
+let r2 = &amp;s;    // 另一个不可变借用
+// let r3 = &amp;mut s; // 错误！不能同时有可变和不可变借用
+<span class="boring">}</span></code></pre></pre>
+<ol start="2">
+<li>可变借用规则</li>
+</ol>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut s = String::from("hello");
+let r1 = &amp;mut s;    // 可变借用
+// let r2 = &amp;mut s; // 错误！不能同时有多个可变借用
+// let r3 = &amp;s;     // 错误！不能同时有可变和不可变借用
+<span class="boring">}</span></code></pre></pre>
+<ol start="3">
+<li>借用必须始终有效</li>
+</ol>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let r;                // 声明引用
+    {
+        let x = 5;        // x 进入作用域
+        r = &amp;x;           // r 引用 x
+    } // x 离开作用域，r 变成了悬垂引用
+    // println!("{}", r); // 错误！
+}</code></pre></pre>
+<p>智能指针解决方案
+Rc - 引用计数</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::rc::Rc;
+
+let data = Rc::new(String::from("hello"));
+let data_clone1 = Rc::clone(&amp;data);    // 引用计数 +1
+let data_clone2 = Rc::clone(&amp;data);    // 引用计数 +1
+// 当所有 Rc 都离开作用域时，数据被释放
+<span class="boring">}</span></code></pre></pre>
+<p>RefCell - 运行时借用检查</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::cell::RefCell;
+
+let data = RefCell::new(5);
+*data.borrow_mut() += 10;              // 可变借用
+println!("{}", *data.borrow());        // 不可变借用
+<span class="boring">}</span></code></pre></pre>
+<p>Rc<RefCell> - 组合使用</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::rc::Rc;
+use std::cell::RefCell;
+
+let data = Rc::new(RefCell::new(5));
+let data_clone = Rc::clone(&amp;data);
+*data_clone.borrow_mut() += 10;        // 修改共享数据
+println!("{}", *data.borrow());        // 看到修改后的值
+<span class="boring">}</span></code></pre></pre>
+<h3 id="生命周期lifetimes"><a class="header" href="#生命周期lifetimes">生命周期（Lifetimes）</a></h3>
+<p>基本语法</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() { x } else { y }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>生命周期省略规则</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 编译器自动推断生命周期
+fn first_word(s: &amp;str) -&gt; &amp;str { ... }  // 等同于 fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str
+<span class="boring">}</span></code></pre></pre>
+<p>实际应用示例
+你的 CubeSat 项目中的使用</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let base = Rc::new(RefCell::new(GroundStation { radio_freq: 87.65 }));
+// Rc 允许多个所有者
+// RefCell 允许运行时借用检查
+// 结合使用可以安全地共享可变状态
+
+let sat = base.borrow().connect(id);     // 不可变借用
+base.borrow_mut().radio_freq += 1.0;    // 可变借用
+<span class="boring">}</span></code></pre></pre>
+<h3 id="rust-的所有权系统通过以下方式保证内存安全"><a class="header" href="#rust-的所有权系统通过以下方式保证内存安全">Rust 的所有权系统通过以下方式保证内存安全：</a></h3>
+<ul>
+<li>编译时检查 - 防止悬垂引用和数据竞争</li>
+<li>零成本抽象 - 运行时没有垃圾收集器开销</li>
+<li>明确的所有权语义 - 代码意图清晰，易于理解</li>
+<li>智能指针 - 在需要时提供额外的灵活性</li>
+</ul>
+<p>以上转自：https://www.cnblogs.com/JohannaFeng/p/19050150</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../rust/所有权.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../rust/生命周期.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../rust/trait.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../rust/str&amp;String区别.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -210,11 +344,11 @@ let y:String = x.to_string();
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../rust/所有权.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../rust/生命周期.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../rust/trait.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../rust/str&amp;String区别.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

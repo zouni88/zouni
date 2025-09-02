@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>clion环境配置 - zouni</title>
+        <title>compose - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,38 +175,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="clion-stm32-开发环境搭建"><a class="header" href="#clion-stm32-开发环境搭建">clion+ stm32 开发环境搭建</a></h1>
-<p><a href="https://www.jetbrains.com/help/clion/2021.2/embedded-development.html">参考jetbrains官方指导</a></p>
-<h1 id="准备"><a class="header" href="#准备">准备</a></h1>
-<h2 id="1-clion"><a class="header" href="#1-clion">1. clion</a></h2>
-<h2 id="2-gcc-arm-none-eabi"><a class="header" href="#2-gcc-arm-none-eabi">2. gcc-arm-none-eabi</a></h2>
-<p><a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads">下载 gcc-arm-none-eabi-10.3-2021.10-win32.exe</a>
-一键安装：最后一步勾选（path添加到环境变量，否则编译程序找不到编译器）</p>
-<h2 id="3-mingw-get-setupexe"><a class="header" href="#3-mingw-get-setupexe">3. mingw-get-setup.exe</a></h2>
-<p>安装之后，配置clion Toolchains 环境就可以了</p>
-<h2 id="4-stm32cubemx-winzip"><a class="header" href="#4-stm32cubemx-winzip">4. stm32cubemx-win.zip</a></h2>
-<p>这一步没什么特殊 一键安装</p>
-<h2 id="5-openocd"><a class="header" href="#5-openocd">5. OpenOCD</a></h2>
-<h3 id="51-openocd-配置"><a class="header" href="#51-openocd-配置">5.1 openOCD 配置</a></h3>
-<p>配置ST-link烧写器配置文件
-stm32f103_stlink.cfg</p>
-<pre><code class="language-config">source [find interface/stlink.cfg]
-transport select hla_swd
-source [find target/stm32f1x.cfg]
-adapter speed 2000  // adapter_khz 2000
-</code></pre>
-<p>保存到openOCD脚本目录下：<br />
-D:\WorkRoom\embedded\stm32\OpenOCD-20210729-0.11.0\share\openocd\scripts\board</p>
-
+                        
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../embedded/stm32/_index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../container/错误记录.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../embedded/串口通信.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../container/compose/mysql.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -216,11 +194,11 @@ D:\WorkRoom\embedded\stm32\OpenOCD-20210729-0.11.0\share\openocd\scripts\board</
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../embedded/stm32/_index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../container/错误记录.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../embedded/串口通信.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../container/compose/mysql.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

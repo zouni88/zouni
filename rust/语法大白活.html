@@ -175,12 +175,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>mod 调用 ::
-内部模块
+                        <h3 id="模块--mod"><a class="header" href="#模块--mod">模块  mod</a></h3>
+<p>mod 组织代码结构；</p>
+<p>内部模块
 外部调用模块内函数—&gt; pub 修饰符</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod mod_test{
+<pre><pre class="playground"><code class="language-rust">mod mod_test{
     pub fn hello(){
         println!("hi");
     }
@@ -190,7 +189,20 @@
         }
     }
 }
-<span class="boring">}</span></code></pre></pre>
+
+fn main(){
+    //这里要调用模块 mod_test()
+    crate::mod_test::hello();
+}</code></pre></pre>
+<ul>
+<li><code>main</code>函数要调用模块<code>mod_test</code>中的函数<code>hello()</code> ，函数必须要有权限修饰符<code>pub</code></li>
+<li>模块之间调用，被调用模块同一个包下可以随便调用，否则也要<code>pub</code>修饰符修饰。</li>
+</ul>
+<blockquote>
+<p>crate::mod_test::hello();</p>
+</blockquote>
+<h3 id="注解"><a class="header" href="#注解">注解</a></h3>
+<p>写了代码却不用，会被警告⚠️，加上<code>#[allow(unused)]</code>注解可以去掉警告，对编译器有效。</p>
 
                     </main>
 
