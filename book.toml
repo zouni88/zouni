@@ -3,7 +3,6 @@ title = "zouni"
 authors = ["zouni88"]
 language = "en"
 
-expand-sections = false
 
 [preprocessor.toc]
 command = "mdbook-toc"
@@ -16,4 +15,11 @@ skip_first = true  # 跳过第一个标题（通常是全书标题）
 command = "mdbook-mermaid"
 
 [output.html]
+# 侧边栏是否默认展开所有章节（默认 false）
+expand-sections = false
+
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
+# 显示目录（默认 true）
+toc = false
+# 目录的最大深度（默认 3）
+toc-depth = 5
