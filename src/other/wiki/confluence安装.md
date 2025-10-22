@@ -63,5 +63,6 @@ docker-compose rm
 enter y, then start server
 
     docker-compose up -d
-    
+
 参考：https://github.com/haxqer/confluence/blob/master/README_zh.md
+https://juejin.cn/post/7409882784058605579
