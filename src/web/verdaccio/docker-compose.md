@@ -1,40 +1,3 @@
-离线安装依赖
-内网环境管理项目依赖
-verdaccio
-
-安装
-npm install -g verdaccio
-
-设置代理
-```shell
-# 直接设置
-npm set registry http://localhost:4873
-
-# 或使用 nrm（需先安装：npm install -g nrm）
-nrm add verdaccio http://localhost:4873
-nrm use verdaccio
-```
-
-## 前端使用
-### 1. 注册用户
-进入项目目录 package.json package.lock.json 所在目录
-```shell
-npm adduser --registry http://localhost:4873
-# 按提示输入用户名、密码、邮箱
-
-# 已注册，登录
-npm login --registry http://localhost:4873
-
-```
-### 2. 发布
-```shell
-npm publish
-```
-
-### 3. 强制安装所有依赖，同时会缓存到4873
-```shell
-npm cache clean --force && npm install --force --registry http://localhost:4873
-```
 
 ### docker-compose
 ```yaml
@@ -61,4 +24,3 @@ networks:
   verdaccio-network:
     driver: bridge  # 桥接网络，简单易用
 ```
-
