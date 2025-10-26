@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>mdbook - zouni</title>
+        <title>Dockerfile_flask - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -12,34 +12,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../";
+            const path_to_root = "../../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +106,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +141,7 @@
                     <h1 class="menu-title">zouni</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,33 +175,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="mdbook-book文档书写工具rust-lang-官方出品"><a class="header" href="#mdbook-book文档书写工具rust-lang-官方出品">mdbook: book文档书写工具：rust-lang 官方出品</a></h2>
-<p>https://github.com/rust-lang/mdBook</p>
-<h3 id="支持mermaid-插件-安装"><a class="header" href="#支持mermaid-插件-安装">支持mermaid 插件 安装</a></h3>
-<blockquote>
-<p>cargo install mdbook-mermaid</p>
-</blockquote>
-<h3 id="这一步会下载-mermaid相关js文件"><a class="header" href="#这一步会下载-mermaid相关js文件">这一步会下载 mermaid相关js文件</a></h3>
-<blockquote>
-<p>mdbook-mermaid install .</p>
-</blockquote>
-<h3 id="booktoml中添加如下"><a class="header" href="#booktoml中添加如下">book.toml中添加如下</a></h3>
-<pre><code class="language-toml">[preprocessor.mermaid]
-command = "mdbook-mermaid"
-
-[output.html]
-additional-js = ["mermaid.min.js", "mermaid-init.js"]
-</code></pre>
+                        <h1 id="基础镜像"><a class="header" href="#基础镜像">基础镜像</a></h1>
+<p>FROM centos</p>
+<h1 id="作者"><a class="header" href="#作者">作者</a></h1>
+<p>MAINTAINER small</p>
+<h1 id="修改源"><a class="header" href="#修改源">修改源</a></h1>
+<p>RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo <br />
+&amp;&amp; yum makecache</p>
+<h1 id="安装python2"><a class="header" href="#安装python2">安装python2</a></h1>
+<p>RUN yum install -y python2 <br />
+&amp;&amp; yum install -y python3</p>
+<p>WORKDIR /root</p>
+<h1 id="修改pypi源"><a class="header" href="#修改pypi源">修改pypi源</a></h1>
+<p>RUN mkdir .pip <br />
+&amp;&amp; touch .pip/pip.conf <br />
+&amp;&amp; echo [global] &gt;&gt; .pip/pip.conf <br />
+&amp;&amp; echo index-url = https://mirrors.aliyun.com/pypi/simple/ &gt;&gt; .pip/pip.conf <br />
+&amp;&amp; echo [install] &gt;&gt; .pip/pip.conf <br />
+&amp;&amp; echo trusted-host=mirrors.aliyun.com &gt;&gt;.pip/pip.conf</p>
+<h1 id="安装virtualwrapper-配置python-虚拟环境"><a class="header" href="#安装virtualwrapper-配置python-虚拟环境">安装virtualwrapper 配置python 虚拟环境</a></h1>
+<p>RUN pip2 install -i https://mirrors.aliyun.com/pypi/simple/ virtualenvwrapper <br />
+&amp;&amp; yum install -y which</p>
+<h1 id="配置环境变量"><a class="header" href="#配置环境变量">配置环境变量</a></h1>
+<p>RUN echo export WORKON_HOME=$HOME/.virtualenvs &gt;&gt; /root/.bashrc <br />
+&amp;&amp; echo source /usr/bin/virtualenvwrapper.sh &gt;&gt; /root/.bashrc <br />
+&amp;&amp; source /root/.bashrc</p>
+<h1 id="创建虚拟环境"><a class="header" href="#创建虚拟环境">创建虚拟环境</a></h1>
+<p>#RUN mkvirtualenv --python=/usr/bin/python3 flask</p>
+<h1 id="安装uwsgi"><a class="header" href="#安装uwsgi">安装uwsgi</a></h1>
+<p>RUN yum install gcc <br />
+&amp;&amp; yum install -y python36-devel <br />
+&amp;&amp; pip3 install -y uwsgi <br />
+&amp;&amp; pip2 install -y supervisor <br />
+&amp;&amp; yum install -y nginx</p>
+<p>EXPOSE 80 443 22</p>
+<p>#CMD ["nginx"]</p>
+<h1 id="容器启动后执行命令"><a class="header" href="#容器启动后执行命令">容器启动后，执行命令</a></h1>
+<p>#ENTRYPOINT ["nginx","-g","daemon off;"]</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../blog/hugo/init.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../../container/docker/DockerFile/Dockerfile_alpine.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../RaspberryPi/_index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../../container/docker/DockerFile/alpine-坑.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -211,11 +231,11 @@ additional-js = ["mermaid.min.js", "mermaid-init.js"]
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../blog/hugo/init.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../../container/docker/DockerFile/Dockerfile_alpine.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../RaspberryPi/_index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../../container/docker/DockerFile/alpine-坑.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -230,17 +250,17 @@ additional-js = ["mermaid.min.js", "mermaid-init.js"]
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../mermaid.min.js"></script>
-        <script src="../mermaid-init.js"></script>
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
 
 
 
