@@ -2908,6 +2908,14 @@ weight: 3</h2>
 app.jinja_env.variable_end_string = ']]'
 
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="macos安装-windows所需的对应的依赖"><a class="header" href="#macos安装-windows所需的对应的依赖">macos安装 windows所需的对应的依赖</a></h2>
+<pre><code class="language-shell">npm install \
+  --os=win32 \
+  --cpu=x64 \  # x86 架构改为 --cpu=ia32
+  --platform=win32 \
+  --force \
+  --no-bin-links  # 禁用 macOS 符号链接
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><hr />
 <h2>bookCollapseSection: true
 weight: 2</h2>
@@ -7879,7 +7887,40 @@ Transfer/sec:    685.72KB
 <tr><td>heavy</td><td>重；大；沉重</td></tr>
 <tr><td>separate</td><td>单独的，分离的</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="wiki"><a class="header" href="#wiki">wiki</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="nexus3"><a class="header" href="#nexus3">nexus3</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="docker-compose-部署"><a class="header" href="#docker-compose-部署">docker compose 部署</a></h3>
+<pre><code class="language-yaml">version: '3.8'
+
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    container_name: nexus3
+    restart: always
+    ports:
+      - "8081:8081"  # Nexus 管理界面
+      - "8082:8082"  # npm 私有仓库端口（可选，也可使用上下文路径）
+      - "8083:8083"  # Maven 私有仓库端口（可选）
+    volumes:
+      - ./nexus-data:/nexus-data  # 持久化数据卷
+    environment:
+      - INSTALL4J_ADD_VM_PARAMS=-Xms512m -Xmx2g  # 调整内存配置
+    networks:
+      - nexus-network
+
+volumes:
+  nexus-data:  # 自动创建数据卷，数据持久化
+
+networks:
+  nexus-network:
+    driver: bridge
+
+</code></pre>
+<h3 id="初次访问-httplocalhost8081获取密码"><a class="header" href="#初次访问-httplocalhost8081获取密码">初次访问 http://localhost:8081，获取密码</a></h3>
+<pre><code>docker exec nexus3 cat /nexus-data/admin.password
+</code></pre>
+<h3 id="登录"><a class="header" href="#登录">登录</a></h3>
+<p>admin + 👆🏻 密码</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="wiki"><a class="header" href="#wiki">wiki</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="confluence-学习版安装教程"><a class="header" href="#confluence-学习版安装教程">confluence 学习版安装教程</a></h2>
 <h3 id="环境要求"><a class="header" href="#环境要求">环境要求</a></h3>
 <p>docker-compose: 17.09.0+</p>
