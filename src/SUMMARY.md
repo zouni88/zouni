@@ -332,6 +332,7 @@
   - [常用单词记录](other/常用单词记录.md)
   - [nexus3](other/nexus3/_index.md)
     - [部署安装](other/nexus3/部署安装.md)
+    - [错误处理](other/nexus3/错误处理.md)
   - [wiki](other/wiki/_index.md)
     - [confluence安装](other/wiki/confluence安装.md)
 - [python](python/_index.md)
