@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>部署安装 - zouni</title>
+        <title>错误处理 - zouni</title>
 
 
         <!-- Custom HTML head -->
@@ -175,48 +175,38 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h3 id="docker-compose-部署"><a class="header" href="#docker-compose-部署">docker compose 部署</a></h3>
-<pre><code class="language-yaml">version: '3.8'
+                        <h3 id="登录失败"><a class="header" href="#登录失败">登录失败</a></h3>
+<p>错误信息</p>
+<pre><code class="language-shell">npm notice Log in on http://localhost:8081/repository/npm-hosted
+Username: admin
+Password: 
 
-services:
-  nexus:
-    image: sonatype/nexus3:latest
-    container_name: nexus3
-    restart: always
-    ports:
-      - "8081:8081"  # Nexus 管理界面
-      - "8082:8082"  # npm 私有仓库端口（可选，也可使用上下文路径）
-      - "8083:8083"  # Maven 私有仓库端口（可选）
-    volumes:
-      - ./nexus-data:/nexus-data  # 持久化数据卷
-    environment:
-      - INSTALL4J_ADD_VM_PARAMS=-Xms512m -Xmx2g  # 调整内存配置
-    networks:
-      - nexus-network
-
-volumes:
-  nexus-data:  # 自动创建数据卷，数据持久化
-
-networks:
-  nexus-network:
-    driver: bridge
+npm error code E401
+npm error Unable to authenticate, need: BASIC realm="Sonatype Nexus Repository Manager"
+npm error A complete log of this run can be found in: /Users/zouni/.npm/_logs/2025-10-30T03_25_39_157Z-debug-0.log
 
 </code></pre>
-<h3 id="初次访问-httplocalhost8081获取密码"><a class="header" href="#初次访问-httplocalhost8081获取密码">初次访问 http://localhost:8081，获取密码</a></h3>
-<pre><code>docker exec nexus3 cat /nexus-data/admin.password
+<p>解决：</p>
+<pre><code class="language-shell"># 清除当前仓库的认证信息
+npm config delete //localhost:8081/repository/npm-private-hosted/:_authToken
+npm config delete //localhost:8081/repository/:_authToken
+
+# 重新设置仓库源（确保地址正确）
+npm config set registry http://localhost:8081/repository/npm-private-hosted/
+
+# 重新登录
+npm login --registry=http://localhost:8081/repository/npm-private-hosted/
 </code></pre>
-<h3 id="登录"><a class="header" href="#登录">登录</a></h3>
-<p>admin + 👆🏻 密码</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../other/nexus3/_index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../other/nexus3/部署安装.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../other/nexus3/错误处理.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../other/wiki/_index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -226,11 +216,11 @@ networks:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../other/nexus3/_index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../other/nexus3/部署安装.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../other/nexus3/错误处理.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../other/wiki/_index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -7920,6 +7920,28 @@ networks:
 </code></pre>
 <h3 id="登录"><a class="header" href="#登录">登录</a></h3>
 <p>admin + 👆🏻 密码</p>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="登录失败"><a class="header" href="#登录失败">登录失败</a></h3>
+<p>错误信息</p>
+<pre><code class="language-shell">npm notice Log in on http://localhost:8081/repository/npm-hosted
+Username: admin
+Password: 
+
+npm error code E401
+npm error Unable to authenticate, need: BASIC realm="Sonatype Nexus Repository Manager"
+npm error A complete log of this run can be found in: /Users/zouni/.npm/_logs/2025-10-30T03_25_39_157Z-debug-0.log
+
+</code></pre>
+<p>解决：</p>
+<pre><code class="language-shell"># 清除当前仓库的认证信息
+npm config delete //localhost:8081/repository/npm-private-hosted/:_authToken
+npm config delete //localhost:8081/repository/:_authToken
+
+# 重新设置仓库源（确保地址正确）
+npm config set registry http://localhost:8081/repository/npm-private-hosted/
+
+# 重新登录
+npm login --registry=http://localhost:8081/repository/npm-private-hosted/
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="wiki"><a class="header" href="#wiki">wiki</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="confluence-学习版安装教程"><a class="header" href="#confluence-学习版安装教程">confluence 学习版安装教程</a></h2>
 <h3 id="环境要求"><a class="header" href="#环境要求">环境要求</a></h3>
